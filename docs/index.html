@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plate Calculator and Progress Tracker</title>
+  <!-- Chart.js library for progress visualization -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Plate Calculator/Progress Log</h1>
+      <div style="display: flex; gap: 0.5rem;">
+        <button id="themeToggle" title="Toggle Dark Mode">🌙</button>
+        <button id="toggleHistory">History</button>
+      </div>
+    </header>
+
+<!-- Exercise Selection -->
+<section id="exerciseSection">
+  <h2>Exercise Selection</h2>
+  <div id="exerciseListContainer">
+    <h3 class="category-title">Push</h3>
+    <div class="panel">
+      <select id="pushSelect" class="exercise-select">
+        <option value="">-- Select Exercise --</option>
+        <option value="Barbell Bench Press">Barbell Bench Press</option>
+        <option value="Incline Bench Press">Incline Bench Press</option>
+        <option value="Decline Bench Press">Decline Bench Press</option>
+        <option value="Overhead Press (OHP)">Overhead Press (OHP)</option>
+      </select>
+    </div>
+    
+    <h3 class="category-title">Pull</h3>
+    <div class="panel">
+      <select id="pullSelect" class="exercise-select">
+        <option value="">-- Select Exercise --</option>
+        <option value="Bent-Over Row">Bent-Over Row</option>
+        <option value="Pendlay Row">Pendlay Row</option>
+        <option value="Barbell Curl">Barbell Curl</option>
+        <option value="Barbell Shrug">Barbell Shrug</option>
+        <option value="Power Clean">Power Clean</option>
+        <option value="Power Snatch">Power Snatch</option>
+      </select>
+    </div>
+    
+    <h3 class="category-title">Legs</h3>
+    <div class="panel">
+      <select id="legsSelect" class="exercise-select">
+        <option value="">-- Select Exercise --</option>
+        <option value="Back Squat">Back Squat</option>
+        <option value="Front Squat">Front Squat</option>
+        <option value="Overhead Squat">Overhead Squat</option>
+        <option value="Romanian Deadlift">Romanian Deadlift</option>
+        <option value="Conventional Deadlift">Conventional Deadlift</option>
+        <option value="Barbell Lunge">Barbell Lunge</option>
+        <option value="Barbell Hip Thrust">Barbell Hip Thrust</option>
+        <option value="Standing Calf Raise">Standing Calf Raise</option>
+      </select>
+    </div>
+  </div>
+</section>
+
+<!-- General Activity Log (Non-Exercise) -->
+<section id="activityLogSection">
+  <h2>Log Other Activity</h2>
+  <div class="panel">
+    <label for="activityInput">Activity Notes:</label>
+    <textarea id="activityInput" rows="4" placeholder="e.g., 30 min cardio, stretching..."></textarea>
+  </div>
+  
+  <div class="panel">
+    <label for="activityDateInput">Date:</label>
+    <input type="date" id="activityDateInput" />
+  </div>
+  
+  <div class="panel">
+    <label style="display: flex; align-items: center; gap: 0.5rem;">
+      <input type="checkbox" id="includeBodyWeight">
+      <span>Log body weight</span>
+    </label>
+    <div id="bodyWeightInput" class="hidden" style="margin-top: 0.5rem;">
+      <label for="bodyWeight">Body Weight (lbs):</label>
+      <input type="number" id="bodyWeight" min="50" max="500" step="0.1" placeholder="e.g., 185.5">
+    </div>
+  </div>
+  
+  <div class="actions">
+    <button id="saveActivity" class="save">Save entry</button>
+  </div>
+</section>
+
+    <!-- Active Workout Form -->
+    <section id="workoutForm" class="hidden">
+      <h2 id="selectedExercise"></h2>
+
+      <div class="panel">
+        <h3>Plate Loading (per side)</h3>
+        <div id="platesGrid" class="grid"></div>
+        <div class="total-weight">
+          <div id="totalWeight" class="weight">45 lbs</div>
+          <small>Total Weight (45lb bar + plates)</small>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="slider-container">
+          <label for="setsRange" id="setsLabel">Sets: 3</label>
+          <input type="range" min="1" max="10" id="setsRange" value="3" />
+        </div>
+        <div class="slider-container">
+          <label for="repsRange" id="repsLabel">Reps: 8</label>
+          <input type="range" min="1" max="20" id="repsRange" value="8" />
+        </div>
+        <div class="slider-container">
+          <label for="rpeRange" id="rpeLabel">RPE: 7</label>
+          <input type="range" min="1" max="10" id="rpeRange" value="7" />
+        </div>
+      </div>
+
+      <div class="panel">
+        <label for="dateInput">Date:</label>
+        <input type="date" id="dateInput" />
+      </div>
+      
+      <div class="panel">
+        <label for="commentsInput">Comments (optional):</label>
+        <textarea id="commentsInput" rows="3" placeholder="add comments"></textarea>
+      </div>
+      
+      <div class="panel">
+        <label style="display: flex; align-items: center; gap: 0.5rem;">
+          <input type="checkbox" id="workoutIncludeBodyWeight">
+          <span>Log body weight</span>
+        </label>
+        <div id="workoutBodyWeightInput" class="hidden" style="margin-top: 0.5rem;">
+          <label for="workoutBodyWeight">Body Weight (lbs):</label>
+          <input type="number" id="workoutBodyWeight" min="50" max="500" step="0.1" placeholder="e.g., 185.5">
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="saveWorkout" class="save">Save Workout</button>
+        <button id="cancelWorkout" class="cancel">Cancel</button>
+      </div>
+    </section>
+
+    <!-- Workout History -->
+    <section id="historySection" class="hidden">
+      <div class="history-header">
+        <h2>Workout History</h2>
+        <div class="history-actions">
+          <button id="exportCSV">Export CSV</button>
+          <button id="copyClipboard">Copy</button>
+          <button id="deleteAll">Delete All</button>
+        </div>
+      </div>
+      
+      <!-- Week Navigation -->
+      <div class="panel" id="weekNavigation">
+        <div class="week-controls">
+          <button id="prevWeek">Previous Week</button>
+          <div id="weekRange" class="week-range">Loading...</div>
+          <button id="nextWeek" disabled>Next Week</button>
+        </div>
+        <div class="week-stats" id="weekStats"></div>
+      </div>
+      
+      <div id="historyList"></div>
+      
+      <!-- Progress Chart Container -->
+      <div id="chartContainer" class="hidden">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+              <h3 style="margin: 0;">Progress Chart</h3>
+              <div class="chart-view-toggle">
+                  <button id="chartAllTimeBtn" class="toggle-btn active">All Time</button>
+                  <button id="chartCurrentWeekBtn" class="toggle-btn">Current Week</button>
+              </div>
+          </div>
+          <div class="panel">
+              <label for="chartExerciseSelect">Select to see progress:</label>
+              <select id="chartExerciseSelect"></select>
+          </div>
+          <div class="panel">
+              <label>Metrics to display:</label>
+              <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 0.5rem;">
+                  <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                      <input type="checkbox" id="showWeight" checked>
+                      <span>Weight</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                      <input type="checkbox" id="showVolume" checked>
+                      <span>Volume</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                      <input type="checkbox" id="showRPE">
+                      <span>RPE</span>
+                  </label>
+                  <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+                      <input type="checkbox" id="showBodyWeight">
+                      <span>Body Weight</span>
+                  </label>
+              </div>
+          </div>
+          <canvas id="progressChart" height="200"></canvas>
+      </div>
+    </section>
+
+    <!-- Error Log UI -->
+    <section id="errorLog" class="hidden"></section>
+    
+    <!-- Custom Confirmation Modal -->
+    <div id="confirmModal" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3 id="modalTitle">Are you sure?</h3>
+            <p id="modalText">This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button id="modalCancel" class="modal-button">Cancel</button>
+                <button id="modalConfirm" class="modal-button danger">Confirm</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <div class="loading-text" id="loadingText">Loading...</div>
+        </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
