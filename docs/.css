@@ -1,0 +1,885 @@
+/* ========================================
+       COLOR PALETTE SYSTEM
+       ======================================== */
+    
+    :root {
+      /* === NEUTRALS === */
+      /* Grays for backgrounds, text, and borders */
+      --neutral-50: #fafafa;
+      --neutral-100: #f5f5f5;
+      --neutral-200: #e5e5e5;
+      --neutral-300: #d4d4d4;
+      --neutral-400: #a3a3a3;
+      --neutral-500: #737373;
+      --neutral-600: #525252;
+      --neutral-700: #404040;
+      --neutral-800: #262626;
+      --neutral-900: #171717;
+      --neutral-950: #0a0a0a;
+      
+      /* === BLUES === */
+      /* Primary brand color - professional, trustworthy */
+      --blue-50: #eff6ff;
+      --blue-100: #dbeafe;
+      --blue-200: #bfdbfe;
+      --blue-300: #93c5fd;
+      --blue-400: #60a5fa;
+      --blue-500: #3b82f6;
+      --blue-600: #2563eb;
+      --blue-700: #1d4ed8;
+      --blue-800: #1e40af;
+      --blue-900: #1e3a8a;
+      
+      /* === SLATE === */
+      /* Cool neutrals for modern UI */
+      --slate-50: #f8fafc;
+      --slate-100: #f1f5f9;
+      --slate-200: #e2e8f0;
+      --slate-300: #cbd5e1;
+      --slate-400: #94a3b8;
+      --slate-500: #64748b;
+      --slate-600: #475569;
+      --slate-700: #334155;
+      --slate-800: #1e293b;
+      --slate-900: #0f172a;
+      
+      /* === EMERALD === */
+      /* Success states, positive actions */
+      --emerald-50: #ecfdf5;
+      --emerald-100: #d1fae5;
+      --emerald-200: #a7f3d0;
+      --emerald-300: #6ee7b7;
+      --emerald-400: #34d399;
+      --emerald-500: #10b981;
+      --emerald-600: #059669;
+      --emerald-700: #047857;
+      --emerald-800: #065f46;
+      --emerald-900: #064e3b;
+      
+      /* === RED === */
+      /* Errors, destructive actions, alerts */
+      --red-50: #fef2f2;
+      --red-100: #fee2e2;
+      --red-200: #fecaca;
+      --red-300: #fca5a5;
+      --red-400: #f87171;
+      --red-500: #ef4444;
+      --red-600: #dc2626;
+      --red-700: #b91c1c;
+      --red-800: #991b1b;
+      --red-900: #7f1d1d;
+      
+      /* === AMBER === */
+      /* Warnings, caution states */
+      --amber-50: #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-200: #fde68a;
+      --amber-300: #fcd34d;
+      --amber-400: #fbbf24;
+      --amber-500: #f59e0b;
+      --amber-600: #d97706;
+      --amber-700: #b45309;
+      --amber-800: #92400e;
+      --amber-900: #78350f;
+      
+      /* === CYAN === */
+      /* Info states, highlights */
+      --cyan-50: #ecfeff;
+      --cyan-100: #cffafe;
+      --cyan-200: #a5f3fc;
+      --cyan-300: #67e8f9;
+      --cyan-400: #22d3ee;
+      --cyan-500: #06b6d4;
+      --cyan-600: #0891b2;
+      --cyan-700: #0e7490;
+      --cyan-800: #155e75;
+      --cyan-900: #164e63;
+      
+      /* === TEAL === */
+      /* Alternative accent color */
+      --teal-50: #f0fdfa;
+      --teal-100: #ccfbf1;
+      --teal-200: #99f6e4;
+      --teal-300: #5eead4;
+      --teal-400: #2dd4bf;
+      --teal-500: #14b8a6;
+      --teal-600: #0d9488;
+      --teal-700: #0f766e;
+      --teal-800: #115e59;
+      --teal-900: #134e4a;
+      
+      /* === INDIGO === */
+      /* Professional alternative accent */
+      --indigo-50: #eef2ff;
+      --indigo-100: #e0e7ff;
+      --indigo-200: #c7d2fe;
+      --indigo-300: #a5b4fc;
+      --indigo-400: #818cf8;
+      --indigo-500: #6366f1;
+      --indigo-600: #4f46e5;
+      --indigo-700: #4338ca;
+      --indigo-800: #3730a3;
+      --indigo-900: #312e81;
+      
+      /* === ORANGE === */
+      /* Standby accent color */
+      --orange-50: #fff7ed;
+      --orange-100: #ffedd5;
+      --orange-200: #fed7aa;
+      --orange-300: #fdba74;
+      --orange-400: #fb923c;
+      --orange-500: #f97316;
+      --orange-600: #ea580c;
+      --orange-700: #c2410c;
+      --orange-800: #9a3412;
+      --orange-900: #7c2d12;
+      
+      /* === LIME === */
+      /* Fresh, energetic accent */
+      --lime-50: #f7fee7;
+      --lime-100: #ecfccb;
+      --lime-200: #d9f99d;
+      --lime-300: #bef264;
+      --lime-400: #a3e635;
+      --lime-500: #84cc16;
+      --lime-600: #65a30d;
+      --lime-700: #4d7c0f;
+      --lime-800: #3f6212;
+      --lime-900: #365314;
+      
+      /* === ROSE === */
+      /* Softer alternative to red */
+      --rose-50: #fff1f2;
+      --rose-100: #ffe4e6;
+      --rose-200: #fecdd3;
+      --rose-300: #fda4af;
+      --rose-400: #fb7185;
+      --rose-500: #f43f5e;
+      --rose-600: #e11d48;
+      --rose-700: #be123c;
+      --rose-800: #9f1239;
+      --rose-900: #881337;
+      
+      /* ========================================
+         SEMANTIC COLOR TOKENS
+         ======================================== */
+      
+      /* Background Colors */
+      --bg-primary: var(--neutral-50);
+      --bg-secondary: #ffffff;
+      --bg-tertiary: var(--slate-100);
+      --bg-hover: var(--slate-200);
+      
+      /* Text Colors */
+      --text-primary: var(--neutral-900);
+      --text-secondary: var(--neutral-600);
+      --text-tertiary: var(--neutral-500);
+      --text-inverse: #ffffff;
+      
+      /* Accent Colors - Using Blue as primary */
+      --accent-primary: var(--blue-600);
+      --accent-secondary: var(--blue-700);
+      --accent-light: var(--blue-100);
+      --accent-hover: var(--blue-500);
+      
+      /* Status Colors */
+      --success: var(--emerald-600);
+      --success-light: var(--emerald-100);
+      --danger: var(--red-600);
+      --danger-light: var(--red-100);
+      --info: var(--cyan-600);
+      --info-light: var(--cyan-100);
+      --warning: var(--amber-500);
+      --warning-light: var(--amber-100);
+      
+      /* Border Colors */
+      --border-color: var(--neutral-300);
+      --border-light: var(--neutral-200);
+      --border-dark: var(--neutral-400);
+      
+      /* Typography */
+      --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      
+      /* Shadows */
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+
+    /* ========================================
+       DARK MODE THEME
+       ======================================== */
+    
+    [data-theme="dark"] {
+      /* Background Colors */
+      --bg-primary: var(--neutral-900);
+      --bg-secondary: var(--neutral-800);
+      --bg-tertiary: var(--neutral-700);
+      --bg-hover: var(--neutral-600);
+      
+      /* Text Colors */
+      --text-primary: var(--neutral-50);
+      --text-secondary: var(--neutral-300);
+      --text-tertiary: var(--neutral-400);
+      --text-inverse: var(--neutral-900);
+      
+      /* Border Colors */
+      --border-color: var(--neutral-600);
+      --border-light: var(--neutral-700);
+      --border-dark: var(--neutral-500);
+      
+      /* Accent colors - slightly brighter for dark mode */
+      --accent-primary: var(--blue-500);
+      --accent-secondary: var(--blue-400);
+      --accent-light: var(--blue-900);
+      --accent-hover: var(--blue-400);
+      
+      /* Shadows adjusted for dark backgrounds */
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.5);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.6), 0 2px 4px -1px rgba(0, 0, 0, 0.5);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.7), 0 4px 6px -2px rgba(0, 0, 0, 0.6);
+      --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.8), 0 10px 10px -5px rgba(0, 0, 0, 0.7);
+    }
+
+    /* ========================================
+       BASE STYLES
+       ======================================== */
+
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-family);
+      margin: 0;
+      padding: 1rem;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* ========================================
+       HEADER
+       ======================================== */
+       
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 1rem;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.75rem;
+      color: var(--accent-secondary);
+      font-weight: 700;
+    }
+
+    /* ========================================
+       SECTIONS & PANELS
+       ======================================== */
+       
+    section {
+      background-color: var(--bg-secondary);
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-md);
+      transition: box-shadow 0.3s ease;
+    }
+    
+    section:hover {
+      box-shadow: var(--shadow-lg);
+    }
+
+    .panel {
+      background-color: var(--bg-tertiary);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid var(--border-color);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    .panel:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ========================================
+       TYPOGRAPHY
+       ======================================== */
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      color: var(--text-primary);
+    }
+    
+    h3 {
+      margin-top: 0;
+      color: var(--text-primary);
+    }
+    
+    h3.category-title {
+      color: var(--accent-secondary);
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 1px solid var(--border-color);
+      font-size: 1rem;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    
+    /* Color-coded category titles matching history entries */
+    h3.category-title:nth-of-type(1) {
+      color: var(--emerald-600); /* Push - Green */
+    }
+    
+    h3.category-title:nth-of-type(2) {
+      color: var(--amber-500); /* Pull - Orange */
+    }
+    
+    h3.category-title:nth-of-type(3) {
+      color: var(--red-600); /* Legs - Red */
+    }
+
+    /* ========================================
+       BUTTONS
+       ======================================== */
+       
+    button {
+      background-color: var(--bg-secondary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      padding: 0.75rem 1.25rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      font-size: 0.9rem;
+    }
+
+    button:hover {
+      background-color: var(--accent-primary);
+      border-color: var(--accent-secondary);
+      color: var(--text-inverse);
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    /* Button Variants */
+    button.save { 
+      background-color: var(--success); 
+      color: var(--text-inverse);
+      border-color: var(--success);
+      transition: all 0.2s ease;
+    }
+    
+    button.save:hover {
+      background-color: var(--emerald-700);
+      border-color: var(--emerald-700);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+    }
+    
+    button.cancel, .modal-button.danger { 
+      background-color: var(--danger); 
+      color: var(--text-inverse);
+      border-color: var(--danger);
+      transition: all 0.2s ease;
+    }
+    
+    button.cancel:hover, .modal-button.danger:hover {
+      background-color: var(--red-700);
+      border-color: var(--red-700);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+    }
+    
+    .history-actions button, .plate-controls button {
+      padding: 0.5rem 0.75rem;
+    }
+    
+    .plate-controls button:hover {
+      background-color: var(--accent-secondary);
+      color: var(--text-inverse);
+      transform: scale(1.1);
+    }
+
+    /* ========================================
+       GRID LAYOUTS
+       ======================================== */
+       
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+    
+    .grid button {
+      transition: all 0.2s ease;
+    }
+    
+    .grid button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+    
+    #platesGrid {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+
+    /* ========================================
+       FORM ELEMENTS
+       ======================================== */
+       
+    input[type="range"] {
+      width: 100%;
+      margin: 0.5rem 0 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+    
+    input[type="range"]:hover {
+      opacity: 0.8;
+    }
+
+    input[type="date"], select {
+      background-color: var(--bg-tertiary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem;
+      border-radius: 0.375rem;
+      color-scheme: light;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    input[type="date"]:focus, select:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px var(--accent-light);
+    }
+    
+    textarea {
+      background-color: var(--bg-tertiary);
+      color: var(--text-primary);
+      border: 1px solid var(--border-color);
+      padding: 0.5rem;
+      border-radius: 0.375rem;
+      width: 100%;
+      font-family: var(--font-family);
+      resize: vertical;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent-primary);
+      box-shadow: 0 0 0 3px var(--accent-light);
+    }
+    
+    select {
+      width: 100%;
+      cursor: pointer;
+    }
+    
+    .exercise-select {
+      font-size: 1rem;
+      padding: 0.75rem;
+    }
+    
+    label {
+      font-weight: 500;
+      display: block;
+      margin-bottom: 0.5rem;
+      color: var(--text-primary);
+    }
+    
+    .slider-container {
+      margin-bottom: 1rem;
+    }
+
+    .actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin: 1.5rem 0;
+    }
+
+    /* ========================================
+       WEIGHT DISPLAY
+       ======================================== */
+       
+    .total-weight {
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .weight {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent-secondary);
+      transition: transform 0.3s ease;
+    }
+    
+    .weight.updated {
+      animation: pulse 0.5s ease;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    .plate-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+    
+    .plate-controls span {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: var(--text-primary);
+    }
+
+    /* ========================================
+       HISTORY SECTION
+       ======================================== */
+       
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .history-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .history-entry {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem;
+      background-color: var(--bg-tertiary);
+      border-radius: 0.5rem;
+      margin-bottom: 0.75rem;
+      border-left: 4px solid var(--accent-primary);
+    }
+    
+    .history-entry button {
+      background: none;
+      border: none;
+      font-size: 1.25rem;
+      cursor: pointer;
+      padding: 0.25rem;
+      color: var(--text-secondary);
+    }
+    
+    .history-entry button:hover {
+      background-color: var(--danger);
+      color: var(--text-inverse);
+      border-radius: 50%;
+    }
+    
+    /* ========================================
+       WEEK NAVIGATION
+       ======================================== */
+       
+    .week-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .week-controls button {
+      padding: 0.5rem 1rem;
+      flex-shrink: 0;
+    }
+    
+    .week-controls button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+    
+    .week-range {
+      font-weight: 600;
+      text-align: center;
+      color: var(--accent-secondary);
+      font-size: 1.1rem;
+      flex-grow: 1;
+    }
+    
+    .week-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: 1rem;
+    }
+    
+    .stat-item {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-primary);
+    }
+    
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-top: 0.25rem;
+    }
+    
+    /* ========================================
+       CHART VIEW TOGGLE
+       ======================================== */
+       
+    .chart-view-toggle {
+      display: flex;
+      gap: 0.5rem;
+      background-color: var(--bg-tertiary);
+      padding: 0.25rem;
+      border-radius: 0.5rem;
+    }
+    
+    .toggle-btn {
+      padding: 0.5rem 1rem;
+      background-color: transparent;
+      border: none;
+      border-radius: 0.375rem;
+      font-size: 0.875rem;
+      transition: all 0.2s ease;
+    }
+    
+    .toggle-btn.active {
+      background-color: var(--accent-primary);
+      color: var(--text-inverse);
+    }
+    
+    .toggle-btn:not(.active):hover {
+      background-color: var(--accent-light);
+      color: var(--accent-primary);
+    }
+    
+    #chartContainer {
+      margin-top: 2rem;
+    }
+    
+    /* ========================================
+       ANIMATIONS
+       ======================================== */
+       
+    /* Fade-in animations for sections */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    section:not(.hidden) {
+      animation: fadeIn 0.4s ease-out;
+    }
+    
+    .history-entry {
+      animation: slideIn 0.3s ease-out;
+    }
+    
+    .history-entry:nth-child(1) { animation-delay: 0s; }
+    .history-entry:nth-child(2) { animation-delay: 0.05s; }
+    .history-entry:nth-child(3) { animation-delay: 0.1s; }
+    .history-entry:nth-child(4) { animation-delay: 0.15s; }
+    .history-entry:nth-child(5) { animation-delay: 0.2s; }
+
+    /* ========================================
+       LOADING OVERLAY
+       ======================================== */
+       
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+    
+    .loading-overlay.show {
+      opacity: 1;
+    }
+    
+    .loading-spinner {
+      background-color: var(--bg-secondary);
+      padding: 2rem 3rem;
+      border-radius: 1rem;
+      box-shadow: var(--shadow-xl);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid var(--border-light);
+      border-top: 4px solid var(--accent-primary);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .loading-text {
+      font-weight: 600;
+      color: var(--text-primary);
+      font-size: 1.1rem;
+    }
+
+    /* ========================================
+       BUTTON LOADING STATE
+       ======================================== */
+       
+    button.loading {
+      position: relative;
+      color: transparent;
+      pointer-events: none;
+    }
+    
+    button.loading::after {
+      content: "";
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      top: 50%;
+      left: 50%;
+      margin-left: -8px;
+      margin-top: -8px;
+      border: 2px solid transparent;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+      color: var(--text-inverse);
+    }
+    
+    /* ========================================
+       CONFIRMATION MODAL
+       ======================================== */
+       
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(10, 10, 10, 0.5);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .modal-overlay:not(.hidden) {
+      opacity: 1;
+    }
+    
+    .modal-box {
+      background-color: var(--bg-secondary);
+      padding: 2rem;
+      border-radius: 0.75rem;
+      border: 1px solid var(--border-color);
+      text-align: center;
+      max-width: 400px;
+      box-shadow: var(--shadow-lg);
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    
+    .modal-overlay:not(.hidden) .modal-box {
+      transform: scale(1);
+      animation: modalBounce 0.4s ease;
+    }
+    
+    @keyframes modalBounce {
+      0% { transform: scale(0.8); opacity: 0; }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    
+    .modal-actions {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    /* ========================================
+       UTILITY CLASSES
+       ======================================== */
+       
+    .hidden {
+      display: none;
+    }
+    
+    .muted {
+      color: var(--text-secondary);
+      text-align: center;
+    }
