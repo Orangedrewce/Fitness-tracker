@@ -764,8 +764,11 @@ function toggleTheme() {
           log(LOG_LEVELS.DEBUG, 'Setting auto-close timer for 4 seconds');
           modalAutoCloseTimer = setTimeout(() => {
             log(LOG_LEVELS.DEBUG, '⏰ Auto-close timer fired (4 seconds elapsed)');
-            hideBodyWeightModal();
-            modalAutoCloseTimer = null;
+            // Check if timer is still valid (not manually cleared)
+            if (modalAutoCloseTimer) {
+              modalAutoCloseTimer = null;
+              hideBodyWeightModal();
+            }
           }, 4000);
         } catch (modalError) {
           log(LOG_LEVELS.ERROR, 'Failed to display modal', modalError);
@@ -1154,9 +1157,45 @@ function toggleTheme() {
       
       // --- Week Calculation Functions ---
       function parseDateLocal(dateStr) {
-        const [y, m, d] = dateStr.split('-').map(Number);
+        if (!dateStr || typeof dateStr !== 'string') {
+          throw new Error('Invalid date string provided');
+        }
+        
+        const parts = dateStr.split('-');
+        if (parts.length !== 3) {
+          throw new Error('Date string must be in YYYY-MM-DD format');
+        }
+        
+        const [y, m, d] = parts.map(Number);
+        
+        // Validate each component is a valid number
+        if (isNaN(y) || isNaN(m) || isNaN(d)) {
+          throw new Error('Date components must be valid numbers');
+        }
+        
+        // Validate ranges
+        if (y < 1900 || y > 2100) {
+          throw new Error('Year must be between 1900 and 2100');
+        }
+        if (m < 1 || m > 12) {
+          throw new Error('Month must be between 1 and 12');
+        }
+        if (d < 1 || d > 31) {
+          throw new Error('Day must be between 1 and 31');
+        }
+        
         // Use UTC for consistent date handling across timezones
-        return new Date(Date.UTC(y, m - 1, d));
+        const date = new Date(Date.UTC(y, m - 1, d));
+        
+        // Validate the date is actually valid (catches Feb 30, etc.)
+        if (isNaN(date.getTime()) || 
+            date.getUTCFullYear() !== y || 
+            date.getUTCMonth() !== m - 1 || 
+            date.getUTCDate() !== d) {
+          throw new Error('Invalid date (e.g., Feb 30)');
+        }
+        
+        return date;
       }
       
 function getWeekBounds(offset = 0) {
@@ -1185,8 +1224,13 @@ function getWeekBounds(offset = 0) {
       }
       
       function isDateInRange(dateStr, start, end) {
-        const date = parseDateLocal(dateStr);
-        return date >= start && date <= end;
+        try {
+          const date = parseDateLocal(dateStr);
+          return date >= start && date <= end;
+        } catch (dateError) {
+          log(LOG_LEVELS.ERROR, `Invalid date in range check: ${dateStr}`, dateError);
+          return false;
+        }
       }
       
       function getWeekWorkouts(offset = 0) {
@@ -1831,7 +1875,7 @@ function getWeekBounds(offset = 0) {
             activityLogSection.classList.remove("hidden");
             workoutForm.classList.add("hidden");
             toggleHistoryBtn.textContent = "History";
-            if (chartInstance) {
+            if (chartInstance && typeof chartInstance.destroy === 'function') {
               try {
                 chartInstance.destroy();
                 log(LOG_LEVELS.INFO, 'Chart instance destroyed on history exit');
@@ -1933,7 +1977,7 @@ function getWeekBounds(offset = 0) {
           
           const data = filteredData.sort((a, b) => new Date(a.date) - new Date(b.date));
           
-          if (chartInstance) {
+          if (chartInstance && typeof chartInstance.destroy === 'function') {
             try {
               chartInstance.destroy();
               log(LOG_LEVELS.INFO, 'Previous chart instance destroyed');
@@ -1958,12 +2002,17 @@ function getWeekBounds(offset = 0) {
           document.getElementById('progressChart').classList.remove('hidden');
 
           const labels = data.map(d => {
-            const dateObj = parseDateLocal(d.date);
-            return dateObj.toLocaleDateString('en-US', { 
-              month: 'short', 
-              day: 'numeric', 
-              year: 'numeric' 
-            });
+            try {
+              const dateObj = parseDateLocal(d.date);
+              return dateObj.toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric', 
+                year: 'numeric' 
+              });
+            } catch (dateError) {
+              log(LOG_LEVELS.ERROR, `Invalid date in chart data: ${d.date}`, dateError);
+              return 'Invalid Date';
+            }
           });
           
           // Get current theme for chart colors
@@ -2545,8 +2594,9 @@ async function copyClipboard() {
         rpeInput.addEventListener('input', (e) => {
             const rpeValue = validateRPE(parseFloat(e.target.value) || 0);
             rpeInput.value = rpeValue; // Update to validated value
-            // Reverse calculation: position = sqrt(RPE/10) * 10
-            const sliderPosition = Math.sqrt(rpeValue / 10) * 10;
+            // Reverse calculation: position = 10 * sqrt(RPE/10) 
+            // Since forward is: RPE = 10 * (position/10)^2
+            const sliderPosition = 10 * Math.sqrt(rpeValue / 10);
             rpeRange.value = sliderPosition;
             rpeLabel.textContent = `RPE: ${rpeValue}`;
         });
