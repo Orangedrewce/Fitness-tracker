@@ -432,6 +432,17 @@ function toggleTheme() {
         return Math.max(0, Math.min(999, num));
       }
       
+      function validateBarWeightInput(value) {
+        // Allow empty input during typing
+        if (value === '' || value === null || value === undefined) {
+          return BAR_WEIGHT; // Return default for empty input
+        }
+        // Float with up to 3 digits before decimal, allow 0
+        const num = parseFloat(value);
+        if (isNaN(num)) return BAR_WEIGHT;
+        return Math.max(0, Math.min(999, num));
+      }
+      
       // --- RPE Logarithmic Conversion ---
       // Converts slider position (0-10) to logarithmic RPE value (0-10)
       // Using exponential scale for more granular control at lower RPE values
@@ -1413,7 +1424,8 @@ function getWeekBounds(offset = 0) {
 
       function calculateTotalWeight() {
         const plateWeight = Object.entries(plates).reduce((sum, [w, c]) => sum + parseFloat(w) * c * 2, 0);
-        const barWeight = parseFloat(barWeightInput.value) || BAR_WEIGHT;
+        const inputValue = barWeightInput.value.trim();
+        const barWeight = inputValue === '' ? BAR_WEIGHT : (parseFloat(inputValue) || BAR_WEIGHT);
         const totalWeight = barWeight + plateWeight;
         
         // Safety check for unrealistic weights
@@ -2605,12 +2617,34 @@ async function copyClipboard() {
             log(LOG_LEVELS.INFO, `RPE: ${rpeValue}`);
         });
         
-        // Bar weight: Update total when changed with validation
+        // Bar weight: Update total when changed, validate on blur
         barWeightInput.addEventListener('input', (e) => {
-            const value = validateBarWeight(e.target.value);
-            barWeightInput.value = value;
+            // Allow typing without immediate validation
             updateTotalWeight();
-            log(LOG_LEVELS.INFO, `Bar weight changed to: ${value} lbs`);
+            log(LOG_LEVELS.INFO, `Bar weight input: ${e.target.value}`);
+        });
+        
+        barWeightInput.addEventListener('blur', (e) => {
+            // Validate and correct on blur (when user finishes editing)
+            const inputValue = e.target.value.trim();
+            if (inputValue === '') {
+                // If field is empty, restore default
+                barWeightInput.value = BAR_WEIGHT;
+                log(LOG_LEVELS.INFO, `Bar weight field empty, restored to default: ${BAR_WEIGHT} lbs`);
+            } else {
+                const value = validateBarWeightInput(inputValue);
+                barWeightInput.value = value;
+                log(LOG_LEVELS.INFO, `Bar weight validated to: ${value} lbs`);
+            }
+            updateTotalWeight();
+        });
+        
+        barWeightInput.addEventListener('keydown', (e) => {
+            // Handle delete/backspace to empty field
+            if ((e.key === 'Delete' || e.key === 'Backspace') && e.target.value.length <= 1) {
+                // Will result in empty field, which calculateTotalWeight handles
+                setTimeout(() => updateTotalWeight(), 0);
+            }
         });
         
         // Prevent form submissions from causing page refresh
